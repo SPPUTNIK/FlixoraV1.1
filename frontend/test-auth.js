@@ -1,5 +1,5 @@
 // Simple test to check authentication
-const API_URL = 'https://fantastic-winner-gwgwx4q5jqw2v9w7-3001.app.github.dev';
+const API_URL = 'https://laughing-yodel-qgwgv7q949vhxjrg-3001.app.github.dev';
 
 // Test if authentication is working
 async function testAuth() {

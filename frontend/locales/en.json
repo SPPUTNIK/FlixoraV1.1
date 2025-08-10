@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "MovieTube",
+    "appName": "FLIXORA",
     "loading": "Loading...",
     "loadingMovie": "Loading movie...",
     "errorLoadingMovie": "Error loading movie",
@@ -41,7 +41,7 @@
   },
   "auth": {
     "login": {
-      "title": "Welcome To HyperTube",
+      "title": "Welcome To FLIXORA",
       "subtitle": "Sign in to access your account and watch amazing movies",
       "username": "Username",
       "usernamePlaceholder": "your_username",
@@ -60,7 +60,7 @@
     },
     "register": {
       "title": "Create an Account",
-      "subtitle": "Join Hypertube to start streaming movies",
+      "subtitle": "Join FLIXORA to start streaming movies",
       "firstName": "First Name",
       "firstNamePlaceholder": "John",
       "lastName": "Last Name",
@@ -168,11 +168,11 @@
     "clearAll": "Clear all"
   },
   "home": {
-    "welcomeBadge": "Welcome to HyperTube — The Future of Streaming",
+    "welcomeBadge": "Welcome to FLIXORA — The Future of Streaming",
     "heroTitle": "Your Ultimate",
     "heroTitleHighlight": "Streaming",
     "heroTitleSuffix": "Experience",
-    "heroDescription": "Stream thousands of movies anytime, anywhere. HyperTube brings you the best cinema experience right to your devices with",
+    "heroDescription": "Stream thousands of movies anytime, anywhere. FLIXORA brings you the best cinema experience right to your devices with",
     "heroDescription4K": "4K quality",
     "heroDescriptionAnd": "and",
     "heroDescriptionFast": "lightning-fast downloads",
@@ -189,8 +189,8 @@
     "goToSlide": "Go to slide {{number}}"
   },
   "footer": {
-    "title": "Hypertube",
-    "subtitle": "Professional streaming platform",
+    "title": "FLIXORA",
+    "subtitle": "Premium movie streaming platform",
     "builtWith": "Built with",
     "byDevelopers": "by developers",
     "copyright": "All rights reserved."

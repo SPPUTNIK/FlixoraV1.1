@@ -1,10 +1,10 @@
-// MongoDB initialization script for Hypertube
-print('🚀 Starting MongoDB initialization for Hypertube...');
+// MongoDB initialization script for FLIXORA
+print('🚀 Starting MongoDB initialization for FLIXORA...');
 
 // Get environment variables (with fallbacks)
-const appUser = process.env.MONGO_APP_USER || 'hypertubeUser';
-const appPassword = process.env.MONGO_APP_PASSWORD || 'appPass';
-const appDatabase = process.env.MONGO_APP_DATABASE || 'hypertube';
+const appUser = process.env.MONGO_APP_USER || 'flixoraUser';
+const appPassword = process.env.MONGO_APP_PASSWORD || 'defaultPassword';
+const appDatabase = process.env.MONGO_APP_DATABASE || 'flixora';
 
 print(`Setting up database: ${appDatabase} with user: ${appUser}`);
 
@@ -70,4 +70,4 @@ try {
   throw error;
 }
 
-print('🎉 MongoDB is ready for Hypertube application!');
+print('🎉 MongoDB is ready for FLIXORA application!');

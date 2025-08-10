@@ -10,8 +10,8 @@ import { LanguageSync } from '@/components/LanguageSync'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Hypertube - Stream Movies',
-  description: 'Watch your favorite movies online',
+  title: 'FLIXORA - Premium Movie Streaming',
+  description: 'Stream thousands of movies in premium quality on FLIXORA - Your ultimate movie experience',
 }
 
 export default function RootLayout({

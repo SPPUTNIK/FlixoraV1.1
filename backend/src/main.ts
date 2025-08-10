@@ -13,8 +13,8 @@ async function bootstrap() {
   // Enable CORS with comprehensive configuration for web and mobile
   app.enableCors({
     origin: [
-      'https://fantastic-winner-gwgwx4q5jqw2v9w7-3000.app.github.dev', 
-      'https://fantastic-winner-gwgwx4q5jqw2v9w7-3001.app.github.dev',
+      'https://laughing-yodel-qgwgv7q949vhxjrg-3000.app.github.dev', 
+      'https://laughing-yodel-qgwgv7q949vhxjrg-3001.app.github.dev',
       'http://localhost:8080',  // Flutter web dev server
       'http://localhost:50505', // Flutter web dev server alternative
       'http://localhost:58514', // Flutter web dev server alternative
@@ -80,7 +80,7 @@ async function bootstrap() {
   
   // Listen on all interfaces
   await app.listen(3001, '0.0.0.0');
-  console.log(`Backend is running on: https://fantastic-winner-gwgwx4q5jqw2v9w7-3001.app.github.dev`);
+  console.log(`Backend is running on: https://laughing-yodel-qgwgv7q949vhxjrg-3001.app.github.dev`);
   console.log(`Backend is also accessible on: http://10.52.84.210:3001`);
 }
 bootstrap();

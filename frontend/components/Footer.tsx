@@ -17,7 +17,7 @@ export default function Footer() {
           <div className="text-center lg:text-left">
             <div className="flex items-center justify-center lg:justify-start space-x-3 mb-4">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl">
-                <span className="text-white text-xl font-bold">▶</span>
+                <span className="text-white text-xl font-bold">F</span>
               </div>
               <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 {t('footer.title')}

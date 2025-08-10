@@ -1,7 +1,7 @@
 {
-  "name": "hypertube",
+  "name": "flixora-backend",
   "version": "0.0.1",
-  "description": "",
+  "description": "FLIXORA backend API for movie streaming platform",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
