@@ -28,8 +28,15 @@ export default function MovieCard({ movie }: { movie: any }) {
 
   const genresArray = getGenresArray(movie.genres);
   
+  const handleCardClick = () => {
+    router.push(`/movie/${movie.id}`);
+  };
+  
   return (
-    <div className="group bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+    <div 
+      className="group bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/50 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative overflow-hidden">
         <Image 
           src={movie.image} 
@@ -65,18 +72,12 @@ export default function MovieCard({ movie }: { movie: any }) {
 
         {/* Play Button - appears on hover */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-          <button 
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-2xl text-sm font-semibold flex items-center gap-2 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl"
-            onClick={(e) => {
-              e.stopPropagation();
-              router.push(`/movie/${movie.id}`);
-            }}
-          >
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-2xl text-sm font-semibold flex items-center gap-2 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             {language === 'fr' ? 'Regarder' : 'Watch Now'}
-          </button>
+          </div>
         </div>
       </div>
 
