@@ -6,9 +6,8 @@ import { useLanguageStore } from '@/store/languageStore';
 import { useInfiniteMovies } from '@/hooks/useMovies';
 import { useFilteredMovies } from '@/hooks/useFilteredMovies';
 import { useDebounce } from '@/hooks/useDebounce';
-import { MovieCard } from '@/components/MovieCard';
+import MovieCard from '@/components/MovieCard';
 import { FilterPanel } from '@/components/FilterPanel';
-import { MobileFilterModal } from '@/components/MobileFilterModal';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Movie } from '@/services/types';
 
@@ -67,7 +66,7 @@ export default function LibraryPage() {
     isFetchingNextPage,
     isLoading: isInfiniteLoading,
     error: infiniteError,
-  } = useInfiniteMovies({ enabled: !hasActiveFilters });
+  } = useInfiniteMovies({});
 
   // Process the data based on which source we're using
   const { movies, totalResults, isLoading, error, canLoadMore, loadMoreFn } = useMemo(() => {
@@ -140,21 +139,26 @@ export default function LibraryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-10">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
+      <div className="relative container mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="max-w-7xl mx-auto">
           {/* Header with Title, Search, and Filters */}
-          <div className="mb-6 sm:mb-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5">
-              <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-0">
-                {t('library.title')}
-              </h1>
+          <div className="mb-8 sm:mb-12">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+              <div>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                  {t('library.title')}
+                </h1>
+                <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
+                  Discover and watch your favorite movies
+                </p>
+              </div>
               
-              <div className="flex items-center gap-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  {totalResults > 0 ? totalResults : movies.length} {movies.length === 1 ? t('library.movieFound') : t('library.moviesFound')}
+              <div className="flex items-center gap-3 mt-4 sm:mt-0">
+                <div className="px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl border border-white/20 dark:border-gray-700/50 text-sm text-gray-600 dark:text-gray-300">
+                  <span className="font-medium">{totalResults > 0 ? totalResults : movies.length}</span> {movies.length === 1 ? t('library.movieFound') : t('library.moviesFound')}
                   {hasActiveFilters && (
-                    <span className="ml-2 px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded text-xs">
+                    <span className="ml-3 px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg text-xs font-medium">
                       {language === 'fr' ? 'Filtré' : 'Filtered'}
                     </span>
                   )}
@@ -162,10 +166,10 @@ export default function LibraryPage() {
                 
                 {/* Desktop Filter Toggle Button */}
                 <button 
-                  className="hidden sm:flex items-center bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg text-sm transition-colors"
+                  className="hidden sm:flex items-center bg-white/70 dark:bg-gray-800/70 hover:bg-white/90 dark:hover:bg-gray-700/90 backdrop-blur-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 rounded-xl border border-white/20 dark:border-gray-700/50 text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                 >
-                  <svg className="w-4 h-4 mr-1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 4C3 3.44772 3.44772 3 4 3H20C20.5523 3 21 3.44772 21 4V6.58579C21 6.851 20.8946 7.10536 20.7071 7.29289L14 14V20C14 20.3688 13.7966 20.7077 13.4648 20.8817L9.46482 22.8817C9.04376 23.0915 8.54077 23.0056 8.21799 22.6828C7.89522 22.36 7.80923 21.857 8.01903 21.4359L9.91903 17.2359C10.0809 16.9141 10.4 16.7 10.75 16.7H12V14L5.29289 7.29289C5.10536 7.10536 5 6.851 5 6.58579V4Z" 
                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -174,10 +178,10 @@ export default function LibraryPage() {
                 
                 {/* Mobile Filter Toggle Button */}
                 <button 
-                  className="sm:hidden flex items-center bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-sm"
+                  className="sm:hidden flex items-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                 >
-                  <svg className="w-4 h-4 mr-1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 4C3 3.44772 3.44772 3 4 3H20C20.5523 3 21 3.44772 21 4V6.58579C21 6.851 20.8946 7.10536 20.7071 7.29289L14 14V20C14 20.3688 13.7966 20.7077 13.4648 20.8817L9.46482 22.8817C9.04376 23.0915 8.54077 23.0056 8.21799 22.6828C7.89522 22.36 7.80923 21.857 8.01903 21.4359L9.91903 17.2359C10.0809 16.9141 10.4 16.7 10.75 16.7H12V14L5.29289 7.29289C5.10536 7.10536 5 6.851 5 6.58579V4Z" 
                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -187,7 +191,7 @@ export default function LibraryPage() {
             </div>
             
             {/* Unified Search and Filter Bar */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 sm:p-6 transition-all duration-300">
+            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/50 p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl">
               <FilterPanel
                 isFilterOpen={isFilterOpen}
                 language={language}
@@ -215,46 +219,67 @@ export default function LibraryPage() {
 
           {/* Active Filters Display */}
           {hasActiveFilters && (
-            <div className="mb-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
+            <div className="mb-8 bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-blue-200/50 dark:border-blue-700/50 backdrop-blur-sm">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 4V2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V4H20C20.5523 4 21 4.44772 21 5S20.5523 6 20 6H19V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6H4C3.44772 6 3 5.55228 3 5S3.44772 4 4 4H7ZM9 3V4H15V3H9ZM7 6V20H17V6H7ZM9 8V18H11V8H9ZM13 8V18H15V8H13Z"/>
+                  </svg>
                   {language === 'fr' ? 'Filtres actifs:' : 'Active filters:'}
                 </h3>
                 <button
                   onClick={clearAllFilters}
-                  className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200"
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 font-medium bg-white/50 dark:bg-gray-800/50 px-3 py-1.5 rounded-lg hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all duration-200"
                 >
                   {language === 'fr' ? 'Tout effacer' : 'Clear all'}
                 </button>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {debouncedSearchTerm && (
-                  <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded">
+                  <span className="inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-medium shadow-md">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
                     Search: {debouncedSearchTerm}
                   </span>
                 )}
                 {yearFilter && (
-                  <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded">
+                  <span className="inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-medium shadow-md">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
                     Year: {yearFilter}
                   </span>
                 )}
                 {genreFilter && (
-                  <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded">
+                  <span className="inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-indigo-500 to-indigo-600 text-white rounded-xl font-medium shadow-md">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 110 2h-1v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6H4a1 1 0 110-2h3z"/>
+                    </svg>
                     Genre: {genreFilter}
                   </span>
                 )}
                 {movieLanguageFilter && (
-                  <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded">
+                  <span className="inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-medium shadow-md">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                    </svg>
                     Language: {movieLanguageFilter}
                   </span>
                 )}
                 {(minRatingFilter > 0 || maxRatingFilter < 10) && (
-                  <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded">
+                  <span className="inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-xl font-medium shadow-md">
+                    <svg className="w-4 h-4 mr-2 text-yellow-200" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
                     Rating: {minRatingFilter}-{maxRatingFilter}
                   </span>
                 )}
                 {sortByFilter !== 'popularity.desc' && (
-                  <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded">
+                  <span className="inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl font-medium shadow-md">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2v0a2 2 0 002-2h14a2 2 0 002 2v0a2 2 0 00-2 2H5a2 2 0 00-2 2z"/>
+                    </svg>
                     Sort: {sortByFilter}
                   </span>
                 )}
@@ -262,28 +287,36 @@ export default function LibraryPage() {
             </div>
           )}
 
-          
-
           {/* Loading State */}
           {isLoading && movies.length === 0 && (
-            <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="flex justify-center items-center py-16">
+              <div className="text-center">
+                <div className="relative">
+                  <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600 mx-auto"></div>
+                  <div className="absolute inset-0 rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600 mx-auto animate-spin" style={{animationDelay: '0.5s', animationDirection: 'reverse'}}></div>
+                </div>
+                <p className="mt-4 text-gray-600 dark:text-gray-400 font-medium">Loading amazing movies...</p>
+              </div>
             </div>
           )}
 
           {/* Error State */}
           {error && (
-            <div className="text-center py-12">
-              <div className="text-red-600 dark:text-red-400 mb-4">
-                <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h3 className="text-lg font-semibold mb-2">
-                  {language === 'fr' ? 'Erreur de chargement' : 'Error loading movies'}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {error?.message || (language === 'fr' ? 'Une erreur est survenue' : 'An error occurred')}
-                </p>
+            <div className="text-center py-16">
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto border border-red-200/50 dark:border-red-700/50">
+                <div className="text-red-500 dark:text-red-400 mb-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
+                    {language === 'fr' ? 'Erreur de chargement' : 'Error loading movies'}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {error?.message || (language === 'fr' ? 'Une erreur est survenue' : 'An error occurred')}
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -292,13 +325,13 @@ export default function LibraryPage() {
           {!isLoading && movies.length > 0 && (
             hasActiveFilters ? (
               // Filtered results - no infinite scroll
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 sm:gap-8">
                 {movies.map((movie: Movie) => (
-                  <MovieCard 
-                    key={movie.id} 
-                    movie={movie} 
-                    language={language} 
-                  />
+                  <div key={movie.id} className="transform hover:scale-105 transition-all duration-300">
+                    <MovieCard 
+                      movie={movie} 
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
@@ -309,22 +342,33 @@ export default function LibraryPage() {
                 hasMore={canLoadMore}
                 loader={
                   <div className="text-center py-8">
-                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <div className="relative inline-block">
+                      <div className="animate-spin rounded-full h-10 w-10 border-4 border-blue-200 border-t-blue-600"></div>
+                      <div className="absolute inset-0 rounded-full h-10 w-10 border-4 border-purple-200 border-t-purple-600 animate-spin" style={{animationDelay: '0.3s', animationDirection: 'reverse'}}></div>
+                    </div>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Loading more movies...</p>
                   </div>
                 }
                 endMessage={
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                    <p>{language === 'fr' ? 'Tous les films ont été chargés!' : 'All movies loaded!'}</p>
+                  <div className="text-center py-12">
+                    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 max-w-sm mx-auto border border-gray-200/50 dark:border-gray-700/50">
+                      <div className="w-12 h-12 mx-auto mb-4 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 font-medium">{language === 'fr' ? 'Tous les films ont été chargés!' : 'All movies loaded!'}</p>
+                    </div>
                   </div>
                 }
               >
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 sm:gap-6">
                   {movies.map((movie: Movie, index: number) => (
-                    <MovieCard
-                      key={`${movie.id}-${index}`}
-                      movie={movie} 
-                      language={language}
-                    />
+                    <div key={`${movie.id}-${index}`} className="transform hover:scale-105 transition-all duration-300">
+                      <MovieCard
+                        movie={movie} 
+                      />
+                    </div>
                   ))}
                 </div>
               </InfiniteScroll>
@@ -333,52 +377,36 @@ export default function LibraryPage() {
 
           {/* No Results */}
           {!isLoading && movies.length === 0 && !error && (
-            <div className="text-center py-12">
-              <div className="text-gray-500 dark:text-gray-400 mb-4">
-                <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <h3 className="text-lg font-semibold mb-2">
-                  {language === 'fr' ? 'Aucun film trouvé' : 'No movies found'}
-                </h3>
-                <p className="text-sm">
-                  {language === 'fr' 
-                    ? 'Essayez de modifier vos critères de recherche ou vos filtres.' 
-                    : 'Try adjusting your search criteria or filters.'}
-                </p>
+            <div className="text-center py-16">
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto border border-gray-200/50 dark:border-gray-700/50">
+                <div className="text-gray-500 dark:text-gray-400 mb-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-700/30 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
+                    {language === 'fr' ? 'Aucun film trouvé' : 'No movies found'}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    {language === 'fr' 
+                      ? 'Essayez de modifier vos critères de recherche ou vos filtres.' 
+                      : 'Try adjusting your search criteria or filters.'}
+                  </p>
+                </div>
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-medium transition-all duration-200 hover:scale-105 shadow-lg"
+                  >
+                    {language === 'fr' ? 'Effacer tous les filtres' : 'Clear all filters'}
+                  </button>
+                )}
               </div>
-              {hasActiveFilters && (
-                <button
-                  onClick={clearAllFilters}
-                  className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                >
-                  {language === 'fr' ? 'Effacer tous les filtres' : 'Clear all filters'}
-                </button>
-              )}
             </div>
           )}
         </div>
       </div>
-
-      {/* Mobile Filter Modal */}
-      <MobileFilterModal
-        isOpen={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        language={language}
-        yearFilter={yearFilter}
-        movieLanguageFilter={movieLanguageFilter}
-        genreFilter={genreFilter}
-        minRatingFilter={minRatingFilter}
-        maxRatingFilter={maxRatingFilter}
-        sortByFilter={sortByFilter}
-        setYearFilter={setYearFilter}
-        setMovieLanguageFilter={setMovieLanguageFilter}
-        setGenreFilter={setGenreFilter}
-        setMinRatingFilter={setMinRatingFilter}
-        setMaxRatingFilter={setMaxRatingFilter}
-        setSortByFilter={setSortByFilter}
-        clearAllFilters={clearAllFilters}
-      />
     </div>
   );
 }
