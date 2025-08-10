@@ -139,26 +139,34 @@ export default function LibraryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-5 animate-blob animation-delay-6000"></div>
+      </div>
+      
       <div className="relative container mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="max-w-7xl mx-auto">
           {/* Header with Title, Search, and Filters */}
           <div className="mb-8 sm:mb-12">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
               <div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
                   {t('library.title')}
                 </h1>
-                <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
+                <p className="text-gray-300 text-base sm:text-lg">
                   Discover and watch your favorite movies
                 </p>
               </div>
               
               <div className="flex items-center gap-3 mt-4 sm:mt-0">
-                <div className="px-4 py-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl border border-white/20 dark:border-gray-700/50 text-sm text-gray-600 dark:text-gray-300">
+                <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 text-sm text-gray-200">
                   <span className="font-medium">{totalResults > 0 ? totalResults : movies.length}</span> {movies.length === 1 ? t('library.movieFound') : t('library.moviesFound')}
                   {hasActiveFilters && (
-                    <span className="ml-3 px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg text-xs font-medium">
+                    <span className="ml-3 px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-xs font-medium shadow-lg">
                       {language === 'fr' ? 'Filtré' : 'Filtered'}
                     </span>
                   )}
@@ -166,7 +174,7 @@ export default function LibraryPage() {
                 
                 {/* Desktop Filter Toggle Button */}
                 <button 
-                  className="hidden sm:flex items-center bg-white/70 dark:bg-gray-800/70 hover:bg-white/90 dark:hover:bg-gray-700/90 backdrop-blur-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 rounded-xl border border-white/20 dark:border-gray-700/50 text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  className="hidden sm:flex items-center bg-white/10 hover:bg-white/20 backdrop-blur-sm text-gray-200 hover:text-white px-4 py-2.5 rounded-xl border border-white/20 hover:border-white/30 text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-purple-500/20"
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                 >
                   <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -178,7 +186,7 @@ export default function LibraryPage() {
                 
                 {/* Mobile Filter Toggle Button */}
                 <button 
-                  className="sm:hidden flex items-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  className="sm:hidden flex items-center bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2.5 rounded-xl text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                 >
                   <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -191,7 +199,7 @@ export default function LibraryPage() {
             </div>
             
             {/* Unified Search and Filter Bar */}
-            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/50 p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-6 sm:p-8 transition-all duration-300 hover:shadow-purple-500/10 hover:border-white/30">
               <FilterPanel
                 isFilterOpen={isFilterOpen}
                 language={language}
@@ -219,7 +227,7 @@ export default function LibraryPage() {
 
           {/* Active Filters Display */}
           {hasActiveFilters && (
-            <div className="mb-8 bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-blue-200/50 dark:border-blue-700/50 backdrop-blur-sm">
+            <div className="mb-8 bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-2xl p-6 border border-purple-800/30 backdrop-blur-sm">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 flex items-center">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -292,10 +300,10 @@ export default function LibraryPage() {
             <div className="flex justify-center items-center py-16">
               <div className="text-center">
                 <div className="relative">
-                  <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600 mx-auto"></div>
-                  <div className="absolute inset-0 rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600 mx-auto animate-spin" style={{animationDelay: '0.5s', animationDirection: 'reverse'}}></div>
+                  <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-300/30 border-t-purple-500 mx-auto"></div>
+                  <div className="absolute inset-0 rounded-full h-16 w-16 border-4 border-pink-300/30 border-t-pink-500 mx-auto animate-spin" style={{animationDelay: '0.5s', animationDirection: 'reverse'}}></div>
                 </div>
-                <p className="mt-4 text-gray-600 dark:text-gray-400 font-medium">Loading amazing movies...</p>
+                <p className="mt-4 text-gray-300 font-medium">Loading amazing movies...</p>
               </div>
             </div>
           )}
@@ -303,17 +311,17 @@ export default function LibraryPage() {
           {/* Error State */}
           {error && (
             <div className="text-center py-16">
-              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto border border-red-200/50 dark:border-red-700/50">
-                <div className="text-red-500 dark:text-red-400 mb-6">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto border border-red-500/30">
+                <div className="text-red-400 mb-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-red-500/20 rounded-full flex items-center justify-center">
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
+                  <h3 className="text-xl font-semibold mb-3 text-white">
                     {language === 'fr' ? 'Erreur de chargement' : 'Error loading movies'}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-300">
                     {error?.message || (language === 'fr' ? 'Une erreur est survenue' : 'An error occurred')}
                   </p>
                 </div>
