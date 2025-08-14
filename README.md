@@ -1,6 +1,6 @@
-# FLIXORA - Localhost Movie Streaming
+# FLIXORA - flixora.uk Movie Streaming
 
-A simple anonymous movie streaming platform running on localhost.
+A simple anonymous movie streaming platform running on flixora.uk.
 
 ## Quick Start
 
@@ -10,7 +10,7 @@ A simple anonymous movie streaming platform running on localhost.
    chmod +x start.sh
    ./start.sh
    ```
-3. Open http://localhost in your browser
+3. Open http://flixora.uk in your browser
 
 ## Stop the Application
 
@@ -31,5 +31,5 @@ Edit the `.env` file to configure:
 - Movie search and filtering
 - Multiple quality streaming
 - Responsive design
-- Localhost-only deployment
+- flixora.uk deployment
 

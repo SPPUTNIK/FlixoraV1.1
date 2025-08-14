@@ -51,7 +51,7 @@ export const searchMovies = async (query: string) => {
 
 // Update getStreamUrl to use the API base URL
 export function getStreamUrl(imdbID: string, title: string, quality?: string) {
-  const baseUrl = config.apiUrl || 'http://localhost:3001';
+  const baseUrl = config.apiUrl || 'http://flixora.uk:3001';
   const params = new URLSearchParams({
     imdbID,
     title,

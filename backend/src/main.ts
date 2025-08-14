@@ -9,11 +9,11 @@ import { existsSync } from 'fs';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Enable CORS with localhost-only configuration
+  // Enable CORS with flixora.uk configuration
   app.enableCors({
     origin: [
-      'http://localhost',
-      'http://localhost:80',
+      'http://flixora.uk',
+      'http://flixora.uk:80',
       'http://127.0.0.1',
       'http://127.0.0.1:80'
     ],

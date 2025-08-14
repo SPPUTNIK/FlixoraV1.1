@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Starting FLIXORA on localhost..."
+echo "🚀 Starting FLIXORA on flixora.uk..."
 
 # Stop any existing containers
 echo "🛑 Stopping existing containers..."
@@ -20,8 +20,8 @@ docker compose -f docker-compose.prod.yml ps
 
 echo ""
 echo "✅ FLIXORA is running!"
-echo "🌐 Access your website at: http://localhost"
-echo "🔧 API endpoint: http://localhost/api"
+echo "🌐 Access your website at: http://flixora.uk"
+echo "🔧 API endpoint: http://flixora.uk/api"
 echo ""
 echo "To stop the services, run:"
 echo "docker compose -f docker-compose.prod.yml down"

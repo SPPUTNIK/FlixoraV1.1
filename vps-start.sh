@@ -90,10 +90,10 @@ deploy() {
     sleep 5
     
     echo "Testing frontend..."
-    curl -I http://localhost:80 2>/dev/null | head -3
+    curl -I http://flixora.uk:80 2>/dev/null | head -3
     
     echo "Testing backend API..."
-    curl -s http://localhost:80/api/health | head -3
+    curl -s http://flixora.uk:80/api/health | head -3
 }
 
 # Run deployment
@@ -101,8 +101,8 @@ deploy
 
 echo ""
 echo "✅ Deployment completed!"
-echo "🌐 Access your website at: http://localhost"
-echo "🔧 API endpoint: http://localhost/api"
+echo "🌐 Access your website at: http://flixora.uk"
+echo "🔧 API endpoint: http://flixora.uk/api"
 echo ""
 echo "If you encounter issues, check logs with:"
 echo "docker compose -f docker-compose.prod.yml logs -f [service-name]"
