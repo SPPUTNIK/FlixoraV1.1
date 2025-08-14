@@ -1,6 +1,0 @@
-https://www.tvmaze.com/api
-https://api.tvmaze.com/shows
-
-
-
-TMDB_API_KEY=1e6c968a53a61f36b467492a2a84bc1d
