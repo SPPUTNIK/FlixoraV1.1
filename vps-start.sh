@@ -22,7 +22,7 @@ check_node_version() {
 # Function to clean up old containers and images
 cleanup_docker() {
     echo "🧹 Cleaning up old Docker resources..."
-    docker-compose -f docker-compose.prod.yml down -v --remove-orphans 2>/dev/null || true
+    docker compose -f docker-compose.prod.yml down -v --remove-orphans 2>/dev/null || true
     docker system prune -f
     docker volume prune -f
 }
@@ -56,18 +56,18 @@ deploy() {
     
     # Build with no cache and verbose output
     echo "🔨 Building containers (this may take several minutes)..."
-    docker-compose -f docker-compose.prod.yml build --no-cache --progress=plain
+    docker compose -f docker-compose.prod.yml build --no-cache --progress=plain
     
     if [ $? -ne 0 ]; then
         echo "❌ Build failed. Trying with legacy Docker build..."
         export DOCKER_BUILDKIT=0
         export COMPOSE_DOCKER_CLI_BUILD=0
-        docker-compose -f docker-compose.prod.yml build --no-cache
+        docker compose -f docker-compose.prod.yml build --no-cache
     fi
     
     # Start services
     echo "▶️ Starting services..."
-    docker-compose -f docker-compose.prod.yml up -d
+    docker compose -f docker-compose.prod.yml up -d
     
     # Wait for services
     echo "⏳ Waiting for services to start..."
@@ -75,15 +75,15 @@ deploy() {
     
     # Check status
     echo "📊 Container status:"
-    docker-compose -f docker-compose.prod.yml ps
+    docker compose -f docker-compose.prod.yml ps
     
     # Check logs for errors
     echo "📋 Recent logs:"
     echo "--- Backend Logs ---"
-    docker-compose -f docker-compose.prod.yml logs --tail=10 backend
+    docker compose -f docker-compose.prod.yml logs --tail=10 backend
     
     echo "--- Frontend Logs ---"
-    docker-compose -f docker-compose.prod.yml logs --tail=10 frontend
+    docker compose -f docker-compose.prod.yml logs --tail=10 frontend
     
     # Test endpoints
     echo "🧪 Testing endpoints..."
@@ -105,4 +105,4 @@ echo "🌐 Access your website at: http://localhost"
 echo "🔧 API endpoint: http://localhost/api"
 echo ""
 echo "If you encounter issues, check logs with:"
-echo "docker-compose -f docker-compose.prod.yml logs -f [service-name]"
+echo "docker compose -f docker-compose.prod.yml logs -f [service-name]"

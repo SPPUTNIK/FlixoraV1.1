@@ -14,9 +14,9 @@ ENV NODE_OPTIONS="--max-old-space-size=2048"
 # Copy package files first (for better caching)
 COPY package*.json ./
 
-# Clear npm cache and install dependencies
+# Clear npm cache and install all dependencies (including dev dependencies for build)
 RUN npm cache clean --force && \
-    npm install --only=production --no-audit --no-fund
+    npm install --no-audit --no-fund
 
 # Copy source code
 COPY . .

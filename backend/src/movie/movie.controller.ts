@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Res, Req } from '@nestjs/common';
 import { MovieService } from './movie.service';
-import {ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiNotFoundResponse, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiConflictResponse, ApiInternalServerErrorResponse, ApiQuery} from '@nestjs/swagger';
+import {ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiNotFoundResponse, ApiBadRequestResponse, ApiInternalServerErrorResponse, ApiQuery} from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { FilterMoviesDto } from './dto/filter-movies.dto';
 
@@ -9,15 +9,13 @@ export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
   @Get()
-  // @UseGuards(AuthGuard) // REMOVED - No authentication required
   @ApiOperation({summary: "Get Movies"})
   @ApiOkResponse({description: "get a list of Movies [id, name, date, vote, image]"})
   findAll(
       @Query('page') page: string,
       @Req() req
     ) {
-    // const id = req.user.sub // REMOVED - No user context needed
-    const id = "anonymous_user" // Use anonymous user
+    const id = "anonymous_user";
     console.log("Anonymous user accessing movies")
     const pageNumber =  parseInt(page, 10) || 1;
     return this.movieService.findAll(id, pageNumber);
@@ -25,7 +23,6 @@ export class MovieController {
 
   // SPECIFIC ROUTES MUST COME BEFORE PARAMETERIZED ROUTES
   @Get('filter')
-  // @UseGuards(AuthGuard) // REMOVED - No authentication required
   @ApiOperation({ summary: 'Filter Movies' })
   @ApiOkResponse({ 
     description: 'Get filtered movies with pagination',
@@ -58,8 +55,7 @@ export class MovieController {
     @Req() req
   ) {
     try {
-      // const userId = req.user.sub // REMOVED - No user context needed
-      const userId = "anonymous_user" // Use anonymous user
+      const userId = "anonymous_user";
       console.log("Filter endpoint called with params:", filterDto)
       console.log("Anonymous user accessing filtered movies")
       
@@ -69,12 +65,11 @@ export class MovieController {
       return result;
     } catch (error) {
       console.error("Error in filter endpoint:", error);
-      throw error; // Let NestJS handle the error response
+      throw error;
     }
   }
 
   @Get('search')
-  // @UseGuards(AuthGuard) // REMOVED - No authentication required
   @ApiOperation({ summary: 'Search for a Movie' })
   @ApiOkResponse({ description: 'Get movie information' })
   @ApiQuery({ name: 'title', required: false, type: String, description: 'Search for a movie by title' })
@@ -83,7 +78,6 @@ export class MovieController {
   }
 
   @Get('stream')
-  // @UseGuards(AuthGuard) // REMOVED - No authentication required
   async streamMovie(
     @Query('imdbID') imdbID: string,
     @Query('title') title: string,
@@ -96,7 +90,6 @@ export class MovieController {
   }
   
   @Post('stream/prepare')
-  // @UseGuards(AuthGuard) // REMOVED - No authentication required
   async prepareStream(
     @Body() streamData: { imdbID: string; title: string; quality: string },
     @Res() res: Response,
@@ -115,7 +108,6 @@ export class MovieController {
   }
   
   @Get('stream/subtitle')
-  // @UseGuards(AuthGuard) // REMOVED - No authentication required
   async getSubtitle(
     @Query('imdbID') imdbID: string,
     @Query('title') title: string,
@@ -127,14 +119,12 @@ export class MovieController {
 
   // PARAMETERIZED ROUTES MUST COME LAST
   @Get(':id')
-  // @UseGuards(AuthGuard) // REMOVED - No authentication required
   @ApiOperation({summary: "Get Movie By ID"})
   @ApiOkResponse({description: "get a Movie infos [id, imdb_id, name, year, overview, length, genres, image, rating, trailer]"})
   findOne(@Param('id') id: string,
     @Req() req
   ) {
-    // const userId = req.user.sub // REMOVED - No user context needed
-    const userId = "anonymous_user" // Use anonymous user
+    const userId = "anonymous_user";
     return this.movieService.findOne(userId, id);
   }
 

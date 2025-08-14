@@ -6,7 +6,7 @@ echo "================================"
 echo "📋 System Information:"
 echo "OS: $(uname -a)"
 echo "Docker Version: $(docker --version)"
-echo "Docker Compose Version: $(docker-compose --version)"
+echo "Docker Compose Version: $(docker compose version)"
 echo "Available Memory: $(free -h | grep ^Mem | awk '{print $2}')"
 echo "Available Disk: $(df -h / | tail -1 | awk '{print $4}')"
 
