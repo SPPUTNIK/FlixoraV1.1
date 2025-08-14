@@ -4,14 +4,12 @@ import { Model } from 'mongoose';
 import { TMDBService } from './tmdb.service';
 import { OMDBService } from './omdb.services';
 import { YTSService } from './yts.services';
-import { UserService } from 'src/user/user.service';
 import { TorrentEngineCacheService } from './torrentEngine.service';
 import { Movie, MovieDocument } from './schemas/movie.schema';
 import { Request, Response } from 'express';
 import * as ffmpeg from 'fluent-ffmpeg';
 import * as path from 'path';
 import * as pump from 'pump';
-import { JwtPayload } from '../auth/jwt-payload.interface';
 
 
 @Injectable()
@@ -23,7 +21,6 @@ export class MovieService {
     private readonly TMDBservice: TMDBService,
     private readonly OMDBservice: OMDBService,
     private readonly YTSservice: YTSService,
-    private readonly userService: UserService,
     private readonly torrentEngineCacheService: TorrentEngineCacheService
   ) {}
 
@@ -34,21 +31,13 @@ export class MovieService {
 
   async findAll(id: string, page: number) {
     // Handle anonymous users - use default language 'en'
-    let language = 'en';
-    if (id !== "anonymous_user") {
-      const user = await this.userService.findById(id);
-      language = user?.language || 'en';
-    }
+    const language = 'en'; // Always use English for anonymous users
     return await this.TMDBservice.fetchAllMovies(language, page);
   }
 
   async findOne(userId: string, id: string): Promise<any> {
     // Handle anonymous users - use default language 'en'  
-    let language = 'en';
-    if (userId !== "anonymous_user") {
-      const user = await this.userService.findById(userId);
-      language = user?.language || 'en';
-    }
+    const language = 'en'; // Always use English for anonymous users
     
     const movieData = await this.TMDBservice.fetchMovie(id, language);
     const existingMovie = await this.movieModel.findOne({ id: id }).exec();
@@ -61,11 +50,7 @@ export class MovieService {
   // Add a new method for filtering movies with anonymous user support
   async filterMovies(userId: string, filterDto: any) {
     // Handle anonymous users - use default language 'en'
-    let language = 'en';
-    if (userId !== "anonymous_user") {
-      const user = await this.userService.findById(userId);
-      language = user?.language || 'en';
-    }
+    const language = 'en'; // Always use English for anonymous users
     
     // Use TMDBService to filter movies - you may need to implement this method
     return await this.TMDBservice.filterMovies(filterDto, language);

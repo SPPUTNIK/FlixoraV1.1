@@ -4,8 +4,6 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
 import { jwtConstants } from './constants';
-import { FortyTwoStrategy } from './strategies/fortytwo.strategy';
-import { GoogleStrategy } from './strategies/google.strategy';
 import { EmailService } from './email.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -45,6 +43,6 @@ const uploadDir = join(process.cwd(), 'uploads');
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, FortyTwoStrategy, GoogleStrategy, EmailService],
+  providers: [AuthService, EmailService],
 })
 export class AuthModule {}

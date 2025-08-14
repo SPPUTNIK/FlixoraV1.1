@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
 import { MovieModule } from './movie/movie.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -14,10 +13,9 @@ import { MovieModule } from './movie/movie.module';
       process.env.MONGODB_URI || 
       'mongodb://hypertubeUser:appPass@db:27017/hypertube?authSource=hypertube'
     ),
-    AuthModule,
-    UserModule,
     MovieModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
 

@@ -60,50 +60,6 @@ export class AuthService {
     response.clearCookie('access_token');
   }
 
-  async validateOAuthUser(oauthUser: any) {
-    const { provider, providerId, email, username, first_name, last_name, avatar } = oauthUser;
-    
-    // Check if user exists by email first
-    let user = await this.userService.findByEmail(email);
-    
-    if (!user) {
-      // Check if username exists and create a unique one if needed
-      let uniqueUsername = username;
-      let counter = 1;
-      while (await this.userService.findByUsername(uniqueUsername)) {
-        uniqueUsername = `${username}_${counter}`;
-        counter++;
-      }
-
-      // Create new user for OAuth
-      user = await this.userService.create({
-        username: uniqueUsername,
-        email,
-        first_name,
-        last_name,
-        password: await argon2.hash(`oauth_${provider}_${providerId}_${Date.now()}`), // Random password for OAuth users
-        avatar, // Store the Google avatar URL directly - we trust Google's CDN
-      });
-    } else if (user.avatar !== avatar && avatar && avatar.includes('googleusercontent.com')) {
-      // Update the avatar if it's different and it's from Google (user might have updated their Google avatar)
-      await this.userService.update(user._id.toString(), { avatar });
-      user.avatar = avatar;
-    }
-
-    return user;
-  }
-
-  async oauthLogin(user: any, response: Response) {
-    const payload = { sub: user._id, username: user.username };
-    const accessToken = await this.jwtService.signAsync(payload);
-    response.cookie('access_token', accessToken, { 
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax'
-    });
-    return user;
-  }
-
   async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
     const { email } = forgotPasswordDto;
     

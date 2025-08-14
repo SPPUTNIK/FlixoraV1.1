@@ -4,8 +4,6 @@ import { SignupDto } from './dto/signup.dto';
 import { Response, Request } from 'express';
 import { AuthGuard } from './auth.guard';
 import { SigninDto } from './dto/signin.dto';
-import { FortyTwoAuthGuard } from './guards/fortytwo-auth.guard';
-import { GoogleAuthGuard } from './guards/google-auth.guard'; // Add this import
 import {ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiNotFoundResponse, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiConflictResponse, ApiInternalServerErrorResponse} from '@nestjs/swagger';
 import { UserService } from 'src/user/user.service';
 import { UpdateUserDto } from 'src/user/dto/update-user.dto';
@@ -56,76 +54,6 @@ export class AuthController {
   async logout(@Res({ passthrough: true }) response: Response) {
     this.authService.logout(response);
     return {message: "LogedOut Successfully"};
-  }
-
-  // Google OAuth Routes - Now enabled
-  @Get('google')
-  @UseGuards(GoogleAuthGuard)
-  async googleAuth() {
-    // Initiates Google OAuth flow
-  }
-
-  @Get('google/callback')
-  @UseGuards(GoogleAuthGuard)
-  async googleAuthCallback(@Req() req: Request, @Res() response: Response) {
-    try {
-      console.log('=== Google Callback Started ===');
-      console.log('Request query:', req.query);
-      console.log('Request user:', req.user);
-      
-      if (!req.user) {
-        console.error('No user found in request');
-        return response.redirect(`${process.env.FRONTEND_URL}/auth/login?error=no_user`);
-      }
-      
-      const user = await this.authService.validateOAuthUser(req.user);
-      console.log('Validated OAuth user:', user);
-      
-      await this.authService.oauthLogin(user, response);
-      console.log('OAuth login successful, redirecting...');
-      
-      return response.redirect(`${process.env.FRONTEND_URL}/library`);
-    } catch (error) {
-      console.error('=== Google OAuth Callback Error ===');
-      console.error('Error details:', error);
-      console.error('Error stack:', error.stack);
-      return response.redirect(`${process.env.FRONTEND_URL}/auth/login?error=oauth_failed`);
-    }
-  }
-
-  // 42 Intra OAuth Routes
-  @Get('42')
-  @UseGuards(FortyTwoAuthGuard)
-  async fortyTwoAuth() {
-    // Initiates 42 OAuth flow
-  }
-
-  @Get('42/callback')
-  @UseGuards(FortyTwoAuthGuard)
-  async fortyTwoAuthCallback(@Req() req: Request, @Res() response: Response) {
-    try {
-      console.log('=== 42 Callback Started ===');
-      console.log('Request query:', req.query);
-      console.log('Request user:', req.user);
-      
-      if (!req.user) {
-        console.error('No user found in request');
-        return response.redirect(`${process.env.FRONTEND_URL}/auth/login?error=no_user`);
-      }
-      
-      const user = await this.authService.validateOAuthUser(req.user);
-      console.log('Validated OAuth user:', user);
-      
-      await this.authService.oauthLogin(user, response);
-      console.log('OAuth login successful, redirecting...');
-      
-      return response.redirect(`${process.env.FRONTEND_URL}/library`);
-    } catch (error) {
-      console.error('=== 42 OAuth Callback Error ===');
-      console.error('Error details:', error);
-      console.error('Error stack:', error.stack);
-      return response.redirect(`${process.env.FRONTEND_URL}/auth/login?error=oauth_failed`);
-    }
   }
 
   @Get('me')

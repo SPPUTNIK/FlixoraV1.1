@@ -1,8 +1,8 @@
 import { apiClient } from './api-client';
-import { Movie, MovieDetails, MovieSearchParams, MovieFilterParams, FilteredMoviesResponse } from './types';
+import { Movie, MovieDetails, MovieFilterParams, FilteredMoviesResponse } from './types';
 import { config } from '../config/api';
 
-export const getMovies = async (page = 1, params?: MovieSearchParams) => {
+export const getMovies = async (page = 1, params?: MovieFilterParams) => {
   // Build the query string with all parameters
   let queryParams = `page=${page}`;
   
@@ -63,7 +63,7 @@ export function getStreamUrl(imdbID: string, title: string, quality?: string) {
 // For subtitles, we'll fetch them as text and create blob URLs
 export async function getSubtitleContent(imdbID: string, title: string): Promise<string | null> {
   try {
-    const baseUrl = config.apiUrl || 'http://localhost:3001';
+    const baseUrl = config.apiUrl;
     const params = new URLSearchParams({
       imdbID,
       title
@@ -122,18 +122,26 @@ function normalizeMovie(movie: any): Movie {
     image: movie.poster_path ? 
       (movie.poster_path.startsWith('http') ? movie.poster_path : `https://image.tmdb.org/t/p/w500${movie.poster_path}`) 
       : movie.image,
-    genre_ids: movie.genre_ids || [],
-    adult: movie.adult || false,
+    genre: movie.genre || false,
     overview: movie.overview || '',
-    original_language: movie.original_language || 'en',
+    year: movie.release_date ? new Date(movie.release_date).getFullYear().toString() : 
+          movie.date ? new Date(movie.date).getFullYear().toString() : 
+          movie.year || '',
+    genres: movie.genres || '',
     popularity: movie.popularity || 0,
-    video: movie.video || false,
-    backdrop_path: movie.backdrop_path || null,
-    genres: movie.genres || [],
-    year: movie.release_date ? new Date(movie.release_date).getFullYear() : 
-          movie.date ? new Date(movie.date).getFullYear() : 
-          movie.year || 0,
-    watched: movie.watched || false
+    watched: movie.watched || false,
+    imdb_id: movie.imdb_id || movie.imdbId,
+    rating: movie.vote_average || movie.vote || movie.rating,
+    length: movie.runtime || movie.length,
+    director: movie.director || '',
+    runTime: movie.runtime || movie.runTime,
+    language: movie.original_language || movie.language || 'en',
+    quality: movie.quality || '',
+    synopsis: movie.overview || movie.synopsis || '',
+    trailerUrl: movie.trailerUrl || '',
+    imdbId: movie.imdb_id || movie.imdbId,
+    subtitles: movie.subtitles || [],
+    trailer: movie.trailer || ''
   };
 }
 

@@ -1,6 +1,6 @@
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { getMovies, getMovieById, searchMovies } from '@/services/movie-service';
-import { Movie, MovieDetails, MovieSearchParams } from '@/services/types';
+import { Movie, MovieDetails, MovieSearchParams, MovieFilterParams } from '@/services/types';
 
 export const useMovies = (page = 1) => {
   return useQuery({
@@ -9,12 +9,22 @@ export const useMovies = (page = 1) => {
   });
 };
 
+// Convert search params to filter params
+const convertSearchToFilterParams = (searchParams: MovieSearchParams): MovieFilterParams => {
+  return {
+    title: searchParams.title,
+    year: searchParams.year ? parseInt(searchParams.year, 10) : undefined,
+    language: searchParams.language,
+  };
+};
+
 export const useInfiniteMovies = (params: MovieSearchParams) => {
   return useInfiniteQuery<Movie[]>({
     queryKey: ['infinite-movies', params],
     queryFn: ({ pageParam = 1 }) => {
-      // Pass the search parameters to your API
-      return getMovies(pageParam as number, params);
+      // Convert search params to filter params
+      const filterParams = convertSearchToFilterParams(params);
+      return getMovies(pageParam as number, filterParams);
     },
     getNextPageParam: (lastPage, allPages) => {
       // If we received movies (assuming 20 per page is full page),

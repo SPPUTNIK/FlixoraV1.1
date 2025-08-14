@@ -11,8 +11,14 @@ RUN npm ci --quiet
 # Copy the rest of the application
 COPY . .
 
+# Build the Next.js application for production
+RUN npm run build
+
 # Expose port 3000
 EXPOSE 3000
 
-# Serve on all network interfaces
-CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0", "-p", "3000"]
+# Set environment variable for port
+ENV PORT=3000
+
+# Start the production server on port 3000
+CMD ["npm", "start", "--", "-p", "3000"]

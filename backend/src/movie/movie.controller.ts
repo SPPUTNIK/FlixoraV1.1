@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, Res, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Res, Req } from '@nestjs/common';
 import { MovieService } from './movie.service';
-import { AuthGuard } from '../auth/auth.guard';
 import {ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiNotFoundResponse, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiConflictResponse, ApiInternalServerErrorResponse, ApiQuery} from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { FilterMoviesDto } from './dto/filter-movies.dto';

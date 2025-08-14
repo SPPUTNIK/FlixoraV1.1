@@ -1,10 +1,17 @@
 import { Injectable, HttpException, HttpStatus, BadRequestException, InternalServerErrorException} from '@nestjs/common';
 import { MovieSearchDto } from './dto/search-movies.dto';
-
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class TMDBService {
-  private readonly apiKey = "1e6c968a53a61f36b467492a2a84bc1d";
+  private readonly apiKey: string;
+
+  constructor(private configService: ConfigService) {
+    this.apiKey = this.configService.get<string>('TMDB_API_KEY') || '';
+    if (!this.apiKey) {
+      throw new Error('TMDB_API_KEY environment variable is required');
+    }
+  }
 
   async fetchAllMovies(language: string, page: number) {
     const url = `https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}&language=${language}&page=${page}`;
