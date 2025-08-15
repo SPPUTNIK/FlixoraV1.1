@@ -202,3 +202,9 @@ body {
     transform: translate(0px, 0px) scale(1);
   }
 }
+
+/* iOS Safari video streaming fixes */
+.ios-video-fix {
+  -webkit-appearance: none;
+  -webkit-playsinline: true;
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Movie } from '@/services/types';
 import { getStreamUrl, checkStreamReady, getSubtitleContent, createSubtitleBlobUrl } from '@/services/movie-service';
@@ -170,7 +170,7 @@ export const MoviePlayer = ({ movie }: MoviePlayerProps) => {
         <video
           ref={nativeVideoRef}
           src={streamUrl}
-          className="w-full h-full"
+          className="w-full h-full ios-video-fix"
           controls
           autoPlay
           playsInline
@@ -196,11 +196,6 @@ export const MoviePlayer = ({ movie }: MoviePlayerProps) => {
           }}
           onProgress={() => {
             console.log('Video loading progress');
-          }}
-          style={{
-            // iOS Safari specific styles
-            WebkitPlaysinlineWebkitFullscreenButton: 'none',
-            WebkitAppearance: 'none',
           }}
         >
           {/* Add subtitle track if available */}
