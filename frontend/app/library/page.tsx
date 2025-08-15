@@ -158,7 +158,7 @@ export default function LibraryPage() {
                   {t('library.title')}
                 </h1>
                 <p className="text-gray-300 text-base sm:text-lg">
-                  Discover and watch your favorite movies
+                  {t('common.discoverMovies')}
                 </p>
               </div>
               
@@ -167,7 +167,7 @@ export default function LibraryPage() {
                   <span className="font-medium">{totalResults > 0 ? totalResults : movies.length}</span> {movies.length === 1 ? t('library.movieFound') : t('library.moviesFound')}
                   {hasActiveFilters && (
                     <span className="ml-3 px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-xs font-medium shadow-lg">
-                      {language === 'fr' ? 'Filtré' : 'Filtered'}
+                      {t('common.filtered')}
                     </span>
                   )}
                 </div>
@@ -181,7 +181,7 @@ export default function LibraryPage() {
                     <path d="M3 4C3 3.44772 3.44772 3 4 3H20C20.5523 3 21 3.44772 21 4V6.58579C21 6.851 20.8946 7.10536 20.7071 7.29289L14 14V20C14 20.3688 13.7966 20.7077 13.4648 20.8817L9.46482 22.8817C9.04376 23.0915 8.54077 23.0056 8.21799 22.6828C7.89522 22.36 7.80923 21.857 8.01903 21.4359L9.91903 17.2359C10.0809 16.9141 10.4 16.7 10.75 16.7H12V14L5.29289 7.29289C5.10536 7.10536 5 6.851 5 6.58579V4Z" 
                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  {isFilterOpen ? (language === 'fr' ? 'Masquer Filtres' : 'Hide Filters') : (language === 'fr' ? 'Afficher Filtres' : 'Show Filters')}
+                  {isFilterOpen ? t('common.hideFilters') : t('common.showFilters')}
                 </button>
                 
                 {/* Mobile Filter Toggle Button */}
@@ -193,7 +193,7 @@ export default function LibraryPage() {
                     <path d="M3 4C3 3.44772 3.44772 3 4 3H20C20.5523 3 21 3.44772 21 4V6.58579C21 6.851 20.8946 7.10536 20.7071 7.29289L14 14V20C14 20.3688 13.7966 20.7077 13.4648 20.8817L9.46482 22.8817C9.04376 23.0915 8.54077 23.0056 8.21799 22.6828C7.89522 22.36 7.80923 21.857 8.01903 21.4359L9.91903 17.2359C10.0809 16.9141 10.4 16.7 10.75 16.7H12V14L5.29289 7.29289C5.10536 7.10536 5 6.851 5 6.58579V4Z" 
                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  {isFilterOpen ? (language === 'fr' ? 'Masquer' : 'Hide') : (language === 'fr' ? 'Filtres' : 'Filters')}
+                  {isFilterOpen ? t('common.hide') : t('common.filters')}
                 </button>
               </div>
             </div>
@@ -233,13 +233,13 @@ export default function LibraryPage() {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 4V2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V4H20C20.5523 4 21 4.44772 21 5S20.5523 6 20 6H19V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6H4C3.44772 6 3 5.55228 3 5S3.44772 4 4 4H7ZM9 3V4H15V3H9ZM7 6V20H17V6H7ZM9 8V18H11V8H9ZM13 8V18H15V8H13Z"/>
                   </svg>
-                  {language === 'fr' ? 'Filtres actifs:' : 'Active filters:'}
+                  {t('common.activeFilters')}
                 </h3>
                 <button
                   onClick={clearAllFilters}
                   className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 font-medium bg-white/50 dark:bg-gray-800/50 px-3 py-1.5 rounded-lg hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all duration-200"
                 >
-                  {language === 'fr' ? 'Tout effacer' : 'Clear all'}
+                  {t('common.clearAllFilters')}
                 </button>
               </div>
               <div className="flex flex-wrap gap-3">

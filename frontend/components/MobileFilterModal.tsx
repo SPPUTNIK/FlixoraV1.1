@@ -1,3 +1,5 @@
+import { useTranslation } from '@/hooks/useTranslation';
+
 interface MobileFilterModalProps {
   isFilterOpen: boolean;
   setIsFilterOpen: (value: boolean) => void;
@@ -17,6 +19,8 @@ export const MobileFilterModal = ({
   setYearFilter,
   setMovieLanguageFilter
 }: MobileFilterModalProps) => {
+  const { t } = useTranslation();
+  
   if (!isFilterOpen) return null;
   
   return (
@@ -31,7 +35,7 @@ export const MobileFilterModal = ({
         <div className="p-6 space-y-6">
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-              {language === 'fr' ? 'Filtres' : 'Filters'}
+              {t('filters')}
             </h3>
             <button
               className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition"
@@ -47,7 +51,7 @@ export const MobileFilterModal = ({
             {/* Mobile Movie Language Filter */}
             <div>
               <label className="form-label text-gray-700 dark:text-gray-300 block mb-1 text-sm">
-                {language === 'fr' ? 'Langue du film' : 'Movie Language'}
+                {t('movieLanguage')}
               </label>
               <div className="relative">
                 <select
@@ -56,7 +60,7 @@ export const MobileFilterModal = ({
                   onChange={(e) => setMovieLanguageFilter(e.target.value)}
                 >
                   <option value="">
-                    {language === 'fr' ? 'Toutes les langues' : 'All Languages'}
+                    {t('allLanguages')}
                   </option>
                   <option value="en">English</option>
                   <option value="fr">Français</option>
@@ -82,14 +86,14 @@ export const MobileFilterModal = ({
             {/* Mobile Year Filter */}
             <div>
               <label className="form-label text-gray-700 dark:text-gray-300 block mb-1 text-sm">
-                {language === 'fr' ? 'Année de sortie' : 'Release Year'}
+                {t('releaseYear')}
               </label>
               <div className="relative">
                 <input
                   type="number"
                   min="1900"
                   max="2025"
-                  placeholder={language === 'fr' ? 'Filtrer par année' : 'Filter by year'}
+                  placeholder={t('filterByYear')}
                   className="input-field w-full pl-8 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-sm py-2"
                   value={yearFilter}
                   onChange={(e) => setYearFilter(e.target.value)}
@@ -111,13 +115,13 @@ export const MobileFilterModal = ({
                 setMovieLanguageFilter('');
               }}
             >
-              {language === 'fr' ? 'Réinitialiser' : 'Reset filters'}
+              {t('resetFilters')}
             </button>
             <button
               className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition"
               onClick={() => setIsFilterOpen(false)}
             >
-              {language === 'fr' ? 'Appliquer' : 'Apply'}
+              {t('apply')}
             </button>
           </div>
         </div>

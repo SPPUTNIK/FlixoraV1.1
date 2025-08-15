@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Movie } from '@/services/types';
 import { useLanguageStore } from '../store/languageStore';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface MovieCardProps {
   movie: Movie;
@@ -11,6 +12,7 @@ interface MovieCardProps {
 export default function MovieCard({ movie }: { movie: any }) {
   const router = useRouter();
   const { language } = useLanguageStore();
+  const { t } = useTranslation();
 
   // Helper function to convert genres to array format
   const getGenresArray = (genres: any): string[] => {
@@ -66,7 +68,7 @@ export default function MovieCard({ movie }: { movie: any }) {
             <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/>
             </svg>
-            {language === 'fr' ? 'Vu' : 'Watched'}
+            {t('watched')}
           </div>
         )}
 
@@ -76,7 +78,7 @@ export default function MovieCard({ movie }: { movie: any }) {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            {language === 'fr' ? 'Regarder' : 'Watch Now'}
+            {t('watchNow')}
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { SearchBar } from './SearchBar';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface FilterPanelProps {
   isFilterOpen: boolean;
@@ -30,15 +31,29 @@ const genres = [
   'Romance', 'Science Fiction', 'TV Movie', 'Thriller', 'War', 'Western'
 ];
 
+const getSortOptionLabel = (value: string, t: (key: string) => string) => {
+  const sortMap: { [key: string]: string } = {
+    'popularity.desc': t('popularityHighToLow'),
+    'popularity.asc': t('popularityLowToHigh'),
+    'release_date.desc': t('releaseDateNewest'),
+    'release_date.asc': t('releaseDateOldest'),
+    'vote_average.desc': t('ratingHighToLow'),
+    'vote_average.asc': t('ratingLowToHigh'),
+    'title.asc': t('titleAZ'),
+    'title.desc': t('titleZA'),
+  };
+  return sortMap[value] || value;
+};
+
 const sortOptions = [
-  { value: 'popularity.desc', label: 'Popularity (High to Low)' },
-  { value: 'popularity.asc', label: 'Popularity (Low to High)' },
-  { value: 'release_date.desc', label: 'Release Date (Newest)' },
-  { value: 'release_date.asc', label: 'Release Date (Oldest)' },
-  { value: 'vote_average.desc', label: 'Rating (High to Low)' },
-  { value: 'vote_average.asc', label: 'Rating (Low to High)' },
-  { value: 'title.asc', label: 'Title (A-Z)' },
-  { value: 'title.desc', label: 'Title (Z-A)' },
+  'popularity.desc',
+  'popularity.asc',
+  'release_date.desc',
+  'release_date.asc',
+  'vote_average.desc',
+  'vote_average.asc',
+  'title.asc',
+  'title.desc',
 ];
 
 const languages = [
@@ -74,6 +89,7 @@ export const FilterPanel = ({
   setSortByFilter,
   clearAllFilters
 }: FilterPanelProps) => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
 
@@ -96,14 +112,14 @@ export const FilterPanel = ({
             {/* Year Filter */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {language === 'fr' ? 'Année' : 'Year'}
+                {t('year')}
               </label>
               <select
                 value={yearFilter}
                 onChange={(e) => setYearFilter(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
-                <option value="">{language === 'fr' ? 'Toutes les années' : 'All Years'}</option>
+                <option value="">{t('allYears')}</option>
                 {years.map(year => (
                   <option key={year} value={year}>{year}</option>
                 ))}
@@ -113,14 +129,14 @@ export const FilterPanel = ({
             {/* Genre Filter */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {language === 'fr' ? 'Genre' : 'Genre'}
+                {t('genre')}
               </label>
               <select
                 value={genreFilter}
                 onChange={(e) => setGenreFilter(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
-                <option value="">{language === 'fr' ? 'Tous les genres' : 'All Genres'}</option>
+                <option value="">{t('allGenres')}</option>
                 {genres.map(genre => (
                   <option key={genre} value={genre}>{genre}</option>
                 ))}
@@ -130,14 +146,14 @@ export const FilterPanel = ({
             {/* Language Filter */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {language === 'fr' ? 'Langue' : 'Language'}
+                {t('language')}
               </label>
               <select
                 value={movieLanguageFilter}
                 onChange={(e) => setMovieLanguageFilter(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
-                <option value="">{language === 'fr' ? 'Toutes les langues' : 'All Languages'}</option>
+                <option value="">{t('allLanguages')}</option>
                 {languages.map(lang => (
                   <option key={lang.code} value={lang.code}>{lang.name}</option>
                 ))}
@@ -147,7 +163,7 @@ export const FilterPanel = ({
             {/* Sort By */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {language === 'fr' ? 'Trier par' : 'Sort By'}
+                {t('sortBy')}
               </label>
               <select
                 value={sortByFilter}
@@ -155,8 +171,8 @@ export const FilterPanel = ({
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 {sortOptions.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {language === 'fr' ? option.label.replace('High to Low', 'Élevé à Faible').replace('Low to High', 'Faible à Élevé').replace('Newest', 'Plus Récent').replace('Oldest', 'Plus Ancien') : option.label}
+                  <option key={option} value={option}>
+                    {getSortOptionLabel(option, t)}
                   </option>
                 ))}
               </select>
@@ -167,7 +183,7 @@ export const FilterPanel = ({
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {language === 'fr' ? 'Note minimale' : 'Minimum Rating'}: {minRatingFilter}
+                {t('minRating')}: {minRatingFilter}
               </label>
               <input
                 type="range"
@@ -181,7 +197,7 @@ export const FilterPanel = ({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {language === 'fr' ? 'Note maximale' : 'Maximum Rating'}: {maxRatingFilter}
+                {t('maxRating')}: {maxRatingFilter}
               </label>
               <input
                 type="range"
@@ -202,7 +218,7 @@ export const FilterPanel = ({
               onClick={clearAllFilters}
               className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
             >
-              {language === 'fr' ? 'Effacer les filtres' : 'Clear Filters'}
+              {t('clearFilters')}
             </button>
           </div>
         </div>

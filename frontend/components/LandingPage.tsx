@@ -5,7 +5,10 @@ import { useTranslation } from "../hooks/useTranslation";
 import { PlayIcon } from "@heroicons/react/24/solid";
 
 export default function LandingPage() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+
+  console.log('🏠 LandingPage - Language:', language);
+  console.log('🏠 LandingPage - t("home.title"):', t("home.title"));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">

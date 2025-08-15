@@ -22,19 +22,19 @@ export default function HomePage() {
           <div className="mb-16">
             <div className="mb-8">
               <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-purple-900/50 text-purple-300 border border-purple-800/50 backdrop-blur-sm">
-                🎬 Welcome to the Ultimate Movie Experience
+                {t("home.welcomeBadge")}
               </span>
             </div>
             
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent mb-8 leading-tight">
-              Welcome to{' '}
+              {t("home.title")}{' '}
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
                 FLIXORA
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Discover and stream thousands of movies instantly. Experience cinema like never before with our premium streaming platform - no registration required!
+              {t("home.subtitle")}
             </p>
             
             {/* CTA Buttons */}
@@ -46,7 +46,7 @@ export default function HomePage() {
                 <svg className="w-6 h-6 mr-3 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
-                Start Watching Now
+                {t("home.startWatching")}
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300"></div>
               </Link>
               
@@ -54,7 +54,7 @@ export default function HomePage() {
                 href="/library"
                 className="inline-flex items-center px-8 py-4 text-lg font-semibold text-purple-300 border-2 border-purple-600/50 rounded-full hover:border-purple-500 hover:text-white transition-all duration-300 backdrop-blur-sm"
               >
-                Browse Library
+                {t("home.browseLibrary")}
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -73,10 +73,10 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">
-                  Instant Access
+                  {t("home.feature1Title")}
                 </h3>
                 <p className="text-gray-300 text-lg leading-relaxed">
-                  Start watching immediately without creating an account or providing personal information. Just click and play!
+                  {t("home.feature1Description")}
                 </p>
               </div>
             </div>
@@ -90,10 +90,10 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors duration-300">
-                  Premium Quality
+                  {t("home.feature2Title")}
                 </h3>
                 <p className="text-gray-300 text-lg leading-relaxed">
-                  Enjoy movies in stunning quality with multiple resolution options including 720p, 1080p, and ultra HD.
+                  {t("home.feature2Description")}
                 </p>
               </div>
             </div>
@@ -107,10 +107,10 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-green-300 transition-colors duration-300">
-                  Vast Collection
+                  {t("home.feature3Title")}
                 </h3>
                 <p className="text-gray-300 text-lg leading-relaxed">
-                  Browse through thousands of movies with advanced search, filtering, and personalized recommendations.
+                  {t("home.feature3Description")}
                 </p>
               </div>
             </div>
@@ -121,23 +121,23 @@ export default function HomePage() {
             <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-3xl p-12 backdrop-blur-sm border border-purple-800/30">
               <div className="text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Ready for Your Movie Marathon?
+                  {t("home.ctaTitle")}
                 </h2>
                 <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                  Join millions of movie lovers and discover your next favorite film today.
+                  {t("home.ctaSubtitle")}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <Link
                     href="/library"
                     className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-xl"
                   >
-                    Explore Movies
+                    {t("home.exploreMovies")}
                     <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
                   <span className="text-gray-400 text-sm">
-                    ✨ Free • HD Quality
+                    {t("home.freeHdQuality")}
                   </span>
                 </div>
               </div>

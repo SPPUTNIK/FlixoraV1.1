@@ -1,63 +1,53 @@
-import { useEffect, useState } from 'react';
 import { useLanguageStore } from '@/store/languageStore';
-import { Locale } from '@/lib/i18n';
+import { useState, useEffect } from 'react';
 
-// Translation dictionaries
-const translations = {
-  en: () => import('@/locales/en.json').then(module => module.default),
-  fr: () => import('@/locales/fr.json').then(module => module.default),
+interface Translations {
+  [key: string]: any;
+}
+
+// Static import approach for Next.js compatibility
+import enTranslations from '@/locales/en.json';
+import frTranslations from '@/locales/fr.json';
+
+const translations: Record<string, Translations> = {
+  en: enTranslations,
+  fr: frTranslations,
 };
 
-// Cache for loaded translations
-const translationCache: Record<string, any> = {};
-
-export function useTranslation() {
+export const useTranslation = () => {
   const { language } = useLanguageStore();
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  // Get nested value from object using dot notation
-  const getNestedValue = (obj: any, path: string): string => {
-    return path.split('.').reduce((current, key) => current?.[key], obj) || path;
-  };
-  
-  // Translation function
+  const [, forceUpdate] = useState(0);
+
+  // Force re-render when language changes
+  useEffect(() => {
+    console.log('🔄 useTranslation: Language changed to:', language);
+    forceUpdate(prev => prev + 1);
+  }, [language]);
+
   const t = (key: string): string => {
-    const currentLang = language as Locale;
-    const cachedTranslations = translationCache[currentLang];
+    const currentTranslations = translations[language] || translations.en;
     
-    if (cachedTranslations) {
-      return getNestedValue(cachedTranslations, key);
+    if (!currentTranslations) {
+      console.warn('⚠️ No translations available for language:', language);
+      return key;
     }
     
-    // If translations aren't loaded yet, return the key
-    return key;
-  };
-  
-  // Load translations for current language
-  const loadTranslations = async (lang: Locale) => {
-    if (!translationCache[lang] && translations[lang]) {
-      try {
-        translationCache[lang] = await translations[lang]();
-      } catch (error) {
-        console.error(`Failed to load translations for ${lang}:`, error);
-        // Fallback to English
-        if (lang !== 'en' && translations.en) {
-          translationCache[lang] = await translations.en();
-        }
-      }
+    const keys = key.split('.');
+    let value: any = currentTranslations;
+    
+    for (const k of keys) {
+      value = value?.[k];
+      if (value === undefined) break;
     }
+    
+    if (value === undefined || typeof value !== 'string') {
+      console.warn('⚠️ Translation missing for key:', key, 'in language:', language);
+      return key;
+    }
+    
+    console.log('✅ Translation:', key, '→', value, `(${language})`);
+    return value;
   };
 
-  // Load translations when language changes
-  useEffect(() => {
-    const loadAndSetTranslations = async () => {
-      setIsLoaded(false);
-      await loadTranslations(language as Locale);
-      setIsLoaded(true);
-    };
-    
-    loadAndSetTranslations();
-  }, [language]);
-  
-  return { t, language: language as Locale, isLoaded };
-}
+  return { t, language };
+};
