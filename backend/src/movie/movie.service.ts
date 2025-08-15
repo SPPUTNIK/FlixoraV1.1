@@ -59,6 +59,8 @@ export class MovieService {
   async streamMovie(imdbID: string, title: string, quality: string, req: Request, res: Response): Promise<void> {
     // Log request for debugging (removed user authentication requirement)
     console.log('Stream request for:', { imdbID, title, quality });
+    console.log('User-Agent:', req.headers['user-agent']);
+    console.log('Range header:', req.headers.range);
     
     // REMOVED: Authentication check - now allows anonymous access
     
@@ -76,22 +78,81 @@ export class MovieService {
     const fileSize = videoFile.length;
     const fileExt = path.extname(videoFile.name).toLowerCase();
     const range = req.headers.range;
+    const userAgent = req.headers['user-agent'] || '';
+    const isIOS = userAgent.includes('iPhone') || userAgent.includes('iPad') || userAgent.includes('iOS');
+    const isSafari = userAgent.includes('Safari') && !userAgent.includes('Chrome');
 
+    console.log('Device detection:', { isIOS, isSafari, userAgent });
+
+    // iOS Safari requires range header
     if (!range) {
-      throw new BadRequestException('Range not provided');
+      // For iOS Safari, send full file size info
+      if (isIOS || isSafari) {
+        res.writeHead(200, {
+          'Content-Length': fileSize,
+          'Content-Type': 'video/mp4',
+          'Accept-Ranges': 'bytes',
+          'Cache-Control': 'no-cache',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Range',
+          'Access-Control-Expose-Headers': 'Content-Range, Content-Length, Accept-Ranges',
+        });
+        
+        const stream = videoFile.createReadStream();
+        return pump(stream, res, (err) => {
+          if (err) {
+            console.error('Full streaming error:', err);
+          }
+        });
+      } else {
+        throw new BadRequestException('Range header required');
+      }
     }
 
+    // Parse range header
     const parts = range.replace(/bytes=/, '').split('-');
     const start = parseInt(parts[0], 10);
-    const end = Math.min(start + 2 * 1024 * 1024 - 1, fileSize - 1); // 2MB chunk
+    let end: number;
+
+    if (parts[1]) {
+      end = parseInt(parts[1], 10);
+    } else {
+      // iOS Safari often sends "bytes=0-" which means from 0 to end
+      // We need to handle this differently for iOS
+      if (isIOS || isSafari) {
+        // For iOS, send a reasonable chunk size but not too big
+        end = Math.min(start + 1024 * 1024 - 1, fileSize - 1); // 1MB for iOS
+      } else {
+        // For other browsers, use 2MB chunks
+        end = Math.min(start + 2 * 1024 * 1024 - 1, fileSize - 1);
+      }
+    }
+
+    // Ensure end doesn't exceed file size
+    end = Math.min(end, fileSize - 1);
     const chunkSize = end - start + 1;
 
-    res.writeHead(206, {
+    console.log('Streaming range:', { start, end, chunkSize, fileSize, isIOS });
+
+    // iOS Safari specific headers
+    const headers: any = {
       'Content-Range': `bytes ${start}-${end}/${fileSize}`,
       'Accept-Ranges': 'bytes',
       'Content-Length': chunkSize,
       'Content-Type': 'video/mp4',
-    });
+      'Cache-Control': 'no-cache',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Range',
+      'Access-Control-Expose-Headers': 'Content-Range, Content-Length, Accept-Ranges',
+    };
+
+    // Additional headers for iOS Safari
+    if (isIOS || isSafari) {
+      headers['Connection'] = 'keep-alive';
+      headers['X-Content-Type-Options'] = 'nosniff';
+    }
+
+    res.writeHead(206, headers);
 
     const stream = videoFile.createReadStream({ start, end });
 

@@ -173,9 +173,15 @@ export const MoviePlayer = ({ movie }: MoviePlayerProps) => {
           className="w-full h-full"
           controls
           autoPlay
+          playsInline
+          muted={false}
           crossOrigin="anonymous"
+          preload="metadata"
           onError={(e) => {
             console.error('Video playback error:', e);
+            const videoElement = e.target as HTMLVideoElement;
+            console.error('Video error code:', videoElement.error?.code);
+            console.error('Video error message:', videoElement.error?.message);
             setStreamError('Video playback failed. The stream might not be available or the movie is still being prepared.');
             setIsPlaying(false);
           }}
@@ -184,6 +190,17 @@ export const MoviePlayer = ({ movie }: MoviePlayerProps) => {
           }}
           onCanPlay={() => {
             console.log('Video can play');
+          }}
+          onLoadedMetadata={() => {
+            console.log('Video metadata loaded');
+          }}
+          onProgress={() => {
+            console.log('Video loading progress');
+          }}
+          style={{
+            // iOS Safari specific styles
+            WebkitPlaysinlineWebkitFullscreenButton: 'none',
+            WebkitAppearance: 'none',
           }}
         >
           {/* Add subtitle track if available */}
