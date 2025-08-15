@@ -108,9 +108,9 @@ export default function MovieDetailPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                       </svg>
                     </div>
-                    Watch Movie
+                    {t('movies.watchMovie')}
                   </h2>
-                  <p className="text-gray-300">Enjoy your movie in high quality</p>
+                  <p className="text-gray-300">{t('movies.enjoyMovieHQ')}</p>
                 </div>
                 <MoviePlayer movie={movie.movieData} />
               </div>
@@ -131,7 +131,7 @@ export default function MovieDetailPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                     </svg>
                   </div>
-                  Movie Details
+                  {t('movies.movieDetails')}
                 </h2>
                 
                 {movie.movieData.imdb_id && (
@@ -147,7 +147,7 @@ export default function MovieDetailPage() {
                         <path d="M15.512 11.207h-1.403v5.157h1.403v-5.157zM8.667 11.207v5.157h1.297v-3.102l.45.005 1.053 3.097h1.121l1.158-3.338h.011v3.338h1.264v-5.157h-1.913l-1.12 3.284-1.206-3.284H8.667zm5.695-.781c0 .391.307.709.685.709.378 0 .686-.318.686-.71 0-.392-.308-.71-.686-.71-.378 0-.686.318-.686.71z" fill="#000"/>
                       </svg>
                     </div>
-                    <span>View on IMDb</span>
+                    <span>{t('movies.viewOnImdb')}</span>
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
