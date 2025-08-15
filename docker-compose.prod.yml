@@ -51,35 +51,28 @@ services:
     container_name: nginx
     ports:
       - '80:80'
-      - '443:443'  # Added HTTPS port
+      - '443:443'
     volumes:
-      # Original HTTP config and SSL-ready config
-      - ./nginx-http.conf:/etc/nginx/nginx-http.conf:ro
-      - ./nginx-ssl-ready.conf:/etc/nginx/nginx-ssl-ready.conf:ro
-      - ./nginx-smart-ssl.sh:/nginx-smart-ssl.sh:ro
-      # SSL certificate volumes (empty until certificates are created)
+      - ./nginx-http.conf:/etc/nginx/nginx.conf:ro
       - ./certbot/conf:/etc/letsencrypt:ro
       - ./certbot/www:/var/www/certbot:ro
-      - ./certbot/logs:/var/log/letsencrypt
     depends_on:
       - frontend
       - backend
     restart: unless-stopped
-    command: ["/nginx-smart-ssl.sh"]  # Use smart SSL script
     networks:
       - hypertube-network
 
-  # Certbot service - only runs when needed for SSL setup
+  # Simple certbot for SSL
   certbot:
     image: certbot/certbot
-    container_name: certbot-ssl
+    container_name: certbot
     restart: "no"
-    profiles: ["ssl-setup"]
+    profiles: ["ssl"]
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-      - ./certbot/logs:/var/log/letsencrypt
-    command: certonly --webroot --webroot-path=/var/www/certbot --email admin@flixora.uk --agree-tos --no-eff-email -d flixora.uk -d www.flixora.uk
+    command: certonly --webroot --webroot-path=/var/www/certbot --email admin@flixora.uk --agree-tos --no-eff-email -d flixora.uk
 
 networks:
   hypertube-network:
