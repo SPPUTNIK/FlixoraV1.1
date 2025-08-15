@@ -32,7 +32,6 @@
     "titleZA": "Title (Z-A)",
     "noResults": "No results found",
     "discoverMovies": "Discover and watch your favorite movies",
-    "duration": "Duration",
     "allSystemsOperational": "All Systems Operational",
     "filtered": "Filtered"
   },
@@ -83,6 +82,8 @@
     "minutes": "minutes",
     "rating": "Rating",
     "backToLibrary": "Back to Library",
+    "duration": "Duration",
+    "preparing": "Preparing...",
     "noData": "No movie data available",
     "errorLoading": "Error loading movie",
     "notFound": "Movie not found",

@@ -17,7 +17,7 @@ export const MoviePlayer = ({ movie }: MoviePlayerProps) => {
   if (!movie) {
     return (
       <div className="w-full aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-        <p className="text-gray-500 dark:text-gray-400">{t('movie.noData')}</p>
+        <p className="text-gray-500 dark:text-gray-400">{t('movies.noData')}</p>
       </div>
     );
   }
@@ -284,7 +284,7 @@ export const MoviePlayer = ({ movie }: MoviePlayerProps) => {
               </div>
             )}
             <span className="text-white font-medium mt-2 sm:mt-4 text-base sm:text-lg group-hover/btn:text-blue-300 transition-colors text-center">
-              {isStreamLoading ? 'Preparing...' : 'Watch Now'}
+              {isStreamLoading ? t('movies.preparing') : t('movies.watchNow')}
             </span>
           </button>
         </div>

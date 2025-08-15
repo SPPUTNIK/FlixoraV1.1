@@ -32,8 +32,7 @@
     "titleZA": "Titre (Z-A)",
     "noResults": "Aucun résultat trouvé",
     "discoverMovies": "Découvrez et regardez vos films préférés",
-    "duration": "Durée",
-    "allSystemsOperational": "Tous les systèmes fonctionnent",
+    "allSystemsOperational": "Tous les systèmes opérationnels",
     "filtered": "Filtré"
   },
   "nav": {
@@ -83,6 +82,8 @@
     "minutes": "minutes",
     "rating": "Note",
     "backToLibrary": "Retour à la bibliothèque",
+    "duration": "Durée",
+    "preparing": "Préparation...",
     "noData": "Aucune donnée de film disponible",
     "errorLoading": "Erreur lors du chargement du film",
     "notFound": "Film non trouvé",

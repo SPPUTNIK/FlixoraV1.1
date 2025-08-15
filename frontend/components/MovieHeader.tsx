@@ -57,7 +57,7 @@ export const MovieHeader = ({ movie, language }: MovieHeaderProps) => {
             <svg className="w-5 h-5 mr-3 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
-            <span className="text-base font-medium">{t('movie.backToLibrary')}</span>
+            <span className="text-base font-medium">{t('movies.backToLibrary')}</span>
           </button>
 
           {/* Movie Title and Info */}
@@ -114,8 +114,8 @@ export const MovieHeader = ({ movie, language }: MovieHeaderProps) => {
                         </svg>
                       </div>
                       <div>
-                        <div className="text-sm text-gray-400 font-medium">Duration</div>
-                        <div className="text-white font-semibold">{movie.length} {t('movie.minutes')}</div>
+                        <div className="text-sm text-gray-400 font-medium">{t('movies.duration')}</div>
+                        <div className="text-white font-semibold">{movie.length} {t('movies.minutes')}</div>
                       </div>
                     </div>
                   )}
@@ -127,7 +127,7 @@ export const MovieHeader = ({ movie, language }: MovieHeaderProps) => {
                         </svg>
                       </div>
                       <div>
-                        <div className="text-sm text-gray-400 font-medium">Rating</div>
+                        <div className="text-sm text-gray-400 font-medium">{t('movies.rating')}</div>
                         <div className="text-white font-semibold">{movie.rating}/10</div>
                       </div>
                     </div>
