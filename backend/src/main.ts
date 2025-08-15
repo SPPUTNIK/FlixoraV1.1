@@ -12,10 +12,8 @@ async function bootstrap() {
   // Enable CORS with flixora.uk configuration
   app.enableCors({
     origin: [
-      'http://flixora.uk',
-      'http://flixora.uk:80',
-      'http://127.0.0.1',
-      'http://127.0.0.1:80'
+      'https://flixora.uk',
+      'https://flixora.uk:80',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: false, // Anonymous access - no credentials needed
