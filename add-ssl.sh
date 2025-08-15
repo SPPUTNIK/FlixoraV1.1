@@ -12,14 +12,14 @@ echo "� Setting up SSL for $DOMAIN..."
 
 # Step 1: Start services with HTTP-only config
 echo "📋 Starting services with HTTP-only configuration..."
-docker-compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml up -d
 
 echo "⏳ Waiting for services to be ready..."
 sleep 10
 
 # Step 2: Get SSL certificate
 echo "🔐 Obtaining SSL certificate from Let's Encrypt..."
-docker-compose -f docker-compose.prod.yml run --rm certbot certonly \
+docker compose -f docker-compose.prod.yml run --rm certbot certonly \
     --webroot \
     --webroot-path=/var/www/certbot \
     --email $EMAIL \
@@ -38,7 +38,7 @@ if [ $? -eq 0 ]; then
     
     # Restart nginx with new config
     echo "🔃 Restarting nginx with HTTPS configuration..."
-    docker-compose -f docker-compose.prod.yml up -d --force-recreate nginx
+    docker compose -f docker-compose.prod.yml up -d --force-recreate nginx
     
     echo "🎉 SSL setup completed! Your site should now be available at https://$DOMAIN"
     echo "🔗 Testing HTTPS..."
