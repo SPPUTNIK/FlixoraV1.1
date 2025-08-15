@@ -1,8 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getFilteredMovies } from '@/services/movie-service';
 import { MovieFilterParams, Movie } from '@/services/types';
+import { useLanguageStore } from '@/store/languageStore';
 
 export const useFilteredMovies = (filters: MovieFilterParams) => {
+  const { language } = useLanguageStore();
+  
   // Only enable the query if we have meaningful filters
   const hasFilters = !!(
     filters.title ||
@@ -15,7 +18,7 @@ export const useFilteredMovies = (filters: MovieFilterParams) => {
   );
 
   return useInfiniteQuery({
-    queryKey: ['filtered-movies', filters],
+    queryKey: ['filtered-movies', filters, language],
     queryFn: ({ pageParam = 1 }) => {
       return getFilteredMovies({ ...filters, page: pageParam as number });
     },

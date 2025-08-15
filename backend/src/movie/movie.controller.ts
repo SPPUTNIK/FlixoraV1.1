@@ -13,12 +13,13 @@ export class MovieController {
   @ApiOkResponse({description: "get a list of Movies [id, name, date, vote, image]"})
   findAll(
       @Query('page') page: string,
+      @Query('language') language: string = 'en',
       @Req() req
     ) {
     const id = "anonymous_user";
-    console.log("Anonymous user accessing movies")
+    console.log("Anonymous user accessing movies with language:", language)
     const pageNumber =  parseInt(page, 10) || 1;
-    return this.movieService.findAll(id, pageNumber);
+    return this.movieService.findAll(id, pageNumber, language);
   }
 
   // SPECIFIC ROUTES MUST COME BEFORE PARAMETERIZED ROUTES
@@ -73,8 +74,10 @@ export class MovieController {
   @ApiOperation({ summary: 'Search for a Movie' })
   @ApiOkResponse({ description: 'Get movie information' })
   @ApiQuery({ name: 'title', required: false, type: String, description: 'Search for a movie by title' })
+  @ApiQuery({ name: 'language', required: false, type: String, description: 'Language for movie search' })
   async searchMovies(@Query() query) {
-    return this.movieService.search(query.title);
+    const language = query.language || 'en';
+    return this.movieService.search(query.title, language);
   }
 
   @Get('stream')
@@ -122,10 +125,12 @@ export class MovieController {
   @ApiOperation({summary: "Get Movie By ID"})
   @ApiOkResponse({description: "get a Movie infos [id, imdb_id, name, year, overview, length, genres, image, rating, trailer]"})
   findOne(@Param('id') id: string,
+    @Query('language') language: string = 'en',
     @Req() req
   ) {
     const userId = "anonymous_user";
-    return this.movieService.findOne(userId, id);
+    console.log("Getting movie", id, "with language:", language);
+    return this.movieService.findOne(userId, id, language);
   }
 
 }

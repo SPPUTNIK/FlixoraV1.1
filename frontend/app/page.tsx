@@ -137,7 +137,7 @@ export default function HomePage() {
                     </svg>
                   </Link>
                   <span className="text-gray-400 text-sm">
-                    ✨ Free • No Ads • HD Quality
+                    ✨ Free • HD Quality
                   </span>
                 </div>
               </div>

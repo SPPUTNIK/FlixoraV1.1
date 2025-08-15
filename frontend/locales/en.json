@@ -12,7 +12,8 @@
   },
   "library": {
     "title": "Movie Library",
-    "moviesFound": "movies found"
+    "moviesFound": "movies found",
+    "movieFound": "movie found"
   },
   "home": {
     "title": "Welcome to FLIXORA",
@@ -38,7 +39,10 @@
     "minutes": "minutes",
     "rating": "Rating",
     "backToLibrary": "Back to Library",
-    "noData": "No movie data available"
+    "noData": "No movie data available",
+    "errorLoading": "Error loading movie",
+    "notFound": "Movie not found",
+    "doesNotExist": "This movie does not exist or has been removed"
   },
   "footer": {
     "title": "FLIXORA",

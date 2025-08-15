@@ -29,15 +29,15 @@ export class MovieService {
     return await newMovie.save();
   }
 
-  async findAll(id: string, page: number) {
-    // Handle anonymous users - use default language 'en'
-    const language = 'en'; // Always use English for anonymous users
+  async findAll(id: string, page: number, language: string = 'en') {
+    // Handle anonymous users with specified language
+    console.log(`Fetching movies for user ${id} with language: ${language}`);
     return await this.TMDBservice.fetchAllMovies(language, page);
   }
 
-  async findOne(userId: string, id: string): Promise<any> {
-    // Handle anonymous users - use default language 'en'  
-    const language = 'en'; // Always use English for anonymous users
+  async findOne(userId: string, id: string, language: string = 'en'): Promise<any> {
+    // Handle anonymous users with specified language
+    console.log(`Fetching movie ${id} for user ${userId} with language: ${language}`);
     
     const movieData = await this.TMDBservice.fetchMovie(id, language);
     const existingMovie = await this.movieModel.findOne({ id: id }).exec();
@@ -176,9 +176,10 @@ export class MovieService {
     }
   }
 
-   async search( title: string) {
+   async search(title: string, language: string = 'en') {
+    console.log(`Searching for "${title}" with language: ${language}`);
     const [result, _, __] = await Promise.all([
-    this.TMDBservice.searchMovies(title),
+    this.TMDBservice.searchMovies(title, language),
     this.OMDBservice.searchMovies(title),
     this.YTSservice.searchMovies(title),
     ]);

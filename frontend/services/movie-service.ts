@@ -2,12 +2,30 @@ import { apiClient } from './api-client';
 import { Movie, MovieDetails, MovieFilterParams, FilteredMoviesResponse } from './types';
 import { config } from '../config/api';
 
+// Helper function to get current language
+const getCurrentLanguage = () => {
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('language-storage');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed.state?.language || 'en';
+      }
+    } catch (error) {
+      console.error('Error getting language from storage:', error);
+    }
+  }
+  return 'en'; // default fallback
+};
+
 export const getMovies = async (page = 1, params?: MovieFilterParams) => {
-  // Build the query string with all parameters
-  let queryParams = `page=${page}`;
+  // Build the query string with all parameters including current language
+  const currentLang = getCurrentLanguage();
+  let queryParams = `page=${page}&language=${currentLang}`;
   
   if (params) {
     if (params.language) queryParams += `&language=${params.language}`;
+    else if (!params.language) queryParams += `&language=${currentLang}`;
     if (params.year) queryParams += `&year=${params.year}`;
     if (params.genre) queryParams += `&genre=${params.genre}`;
     if (params.minRating) queryParams += `&minRating=${params.minRating}`;
@@ -20,18 +38,21 @@ export const getMovies = async (page = 1, params?: MovieFilterParams) => {
 };
 
 export const getMovieById = async (id: string): Promise<MovieDetails> => {
-  const response = await apiClient.get<MovieDetails>(`/movies/${id}`);
+  const currentLang = getCurrentLanguage();
+  const response = await apiClient.get<MovieDetails>(`/movies/${id}?language=${currentLang}`);
   return response.data;
 };
 
 export const getFilteredMovies = async (params: MovieFilterParams): Promise<FilteredMoviesResponse> => {
-  // Build query parameters
+  // Build query parameters with current language as default
   const queryParams = new URLSearchParams();
+  const currentLang = getCurrentLanguage();
   
   if (params.page) queryParams.append('page', params.page.toString());
   if (params.title) queryParams.append('title', params.title);
   if (params.year) queryParams.append('year', params.year.toString());
   if (params.language) queryParams.append('language', params.language);
+  else queryParams.append('language', currentLang); // Use current language as default
   if (params.genre) queryParams.append('genre', params.genre);
   if (params.minRating !== undefined) queryParams.append('minRating', params.minRating.toString());
   if (params.maxRating !== undefined) queryParams.append('maxRating', params.maxRating.toString());
@@ -45,7 +66,8 @@ export const getFilteredMovies = async (params: MovieFilterParams): Promise<Filt
 export const filterMovies = getFilteredMovies;
 
 export const searchMovies = async (query: string) => {
-  const response = await apiClient.get<any[]>(`/movies/search?title=${encodeURIComponent(query)}`);
+  const currentLang = getCurrentLanguage();
+  const response = await apiClient.get<any[]>(`/movies/search?title=${encodeURIComponent(query)}&language=${currentLang}`);
   return response.data.map(normalizeMovie);
 };
 

@@ -12,7 +12,8 @@
   },
   "library": {
     "title": "Bibliothèque de Films",
-    "moviesFound": "films trouvés"
+    "moviesFound": "films trouvés",
+    "movieFound": "film trouvé"
   },
   "home": {
     "title": "Bienvenue sur FLIXORA",
@@ -33,12 +34,15 @@
     "overview": "Synopsis",
     "noOverviewAvailable": "Aucun synopsis disponible",
     "trailer": "Bande-annonce",
-    "movieInfo": "Info du film",
+    "movieInfo": "Informations du film",
     "length": "Durée",
     "minutes": "minutes",
     "rating": "Note",
     "backToLibrary": "Retour à la bibliothèque",
-    "noData": "Aucune donnée de film disponible"
+    "noData": "Aucune donnée de film disponible",
+    "errorLoading": "Erreur lors du chargement du film",
+    "notFound": "Film non trouvé",
+    "doesNotExist": "Ce film n'existe pas ou a été supprimé"
   },
   "footer": {
     "title": "FLIXORA",

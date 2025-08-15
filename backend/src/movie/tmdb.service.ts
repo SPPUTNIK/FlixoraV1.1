@@ -84,10 +84,10 @@ export class TMDBService {
     }
   }
 
-  async searchMovies(query: string) {
+  async searchMovies(query: string, language: string = 'en') {
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${encodeURIComponent(query)}&language=${language}`;
 
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${encodeURIComponent(query)}`;
-
+    console.log('Searching TMDB with language:', language);
     const response = await fetch(url);
     if (!response.ok) {
       throw new InternalServerErrorException('Failed to fetch movie from TMDb');
