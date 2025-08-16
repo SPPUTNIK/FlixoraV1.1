@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from '@/hooks/useTranslation';
+import { UnifiedAd } from '@/components/ads';
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -62,6 +63,16 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Banner Ad After Hero Section */}
+          <div className="mb-16 flex justify-center">
+            <UnifiedAd 
+              type="banner" 
+              width={728} 
+              height={90}
+              className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            />
+          </div>
+
           {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
             <div className="group relative bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-2xl p-8 shadow-2xl backdrop-blur-sm border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
@@ -114,6 +125,16 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* Banner Ad Before CTA Section */}
+          <div className="mt-16 mb-8 flex justify-center">
+            <UnifiedAd 
+              type="banner" 
+              width={728} 
+              height={90}
+              className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            />
           </div>
 
           {/* Secondary CTA */}

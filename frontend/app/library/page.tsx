@@ -10,6 +10,7 @@ import MovieCard from '@/components/MovieCard';
 import { FilterPanel } from '@/components/FilterPanel';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Movie } from '@/services/types';
+import { UnifiedAd } from '@/components/ads';
 
 export default function LibraryPage() {
   const { t } = useTranslation();
@@ -225,6 +226,16 @@ export default function LibraryPage() {
             </div>
           </div>
 
+          {/* Top Banner Ad - After Search/Filter Section */}
+          <div className="mb-8 flex justify-center">
+            <UnifiedAd 
+              type="banner" 
+              width={728} 
+              height={90}
+              className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            />
+          </div>
+
           {/* Active Filters Display */}
           {hasActiveFilters && (
             <div className="mb-8 bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-2xl p-6 border border-purple-800/30 backdrop-blur-sm">
@@ -334,13 +345,32 @@ export default function LibraryPage() {
             hasActiveFilters ? (
               // Filtered results - no infinite scroll
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 sm:gap-8">
-                {movies.map((movie: Movie) => (
-                  <div key={movie.id} className="transform hover:scale-105 transition-all duration-300">
-                    <MovieCard 
-                      movie={movie} 
-                    />
-                  </div>
-                ))}
+                {movies.map((movie: Movie, index: number) => {
+                  const movieCard = (
+                    <div key={movie.id} className="transform hover:scale-105 transition-all duration-300">
+                      <MovieCard movie={movie} />
+                    </div>
+                  );
+
+                  // Add banner ad every 12 movies in filtered results
+                  if ((index + 1) % 12 === 0 && index < movies.length - 1) {
+                    return (
+                      <div key={`filtered-movie-with-ad-${index}`} className="contents">
+                        {movieCard}
+                        <div className="col-span-full flex justify-center my-8">
+                          <UnifiedAd 
+                            type="banner" 
+                            width={728} 
+                            height={90}
+                            className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                          />
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return movieCard;
+                })}
               </div>
             ) : (
               // Default movies - with infinite scroll
@@ -371,13 +401,32 @@ export default function LibraryPage() {
                 }
               >
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 sm:gap-6">
-                  {movies.map((movie: Movie, index: number) => (
-                    <div key={`${movie.id}-${index}`} className="transform hover:scale-105 transition-all duration-300">
-                      <MovieCard
-                        movie={movie} 
-                      />
-                    </div>
-                  ))}
+                  {movies.map((movie: Movie, index: number) => {
+                    const movieCard = (
+                      <div key={`${movie.id}-${index}`} className="transform hover:scale-105 transition-all duration-300">
+                        <MovieCard movie={movie} />
+                      </div>
+                    );
+
+                    // Add banner ad every 20 movies
+                    if ((index + 1) % 20 === 0 && index < movies.length - 1) {
+                      return (
+                        <div key={`movie-with-ad-${index}`} className="contents">
+                          {movieCard}
+                          <div className="col-span-full flex justify-center my-8">
+                            <UnifiedAd 
+                              type="banner" 
+                              width={728} 
+                              height={90}
+                              className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                            />
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    return movieCard;
+                  })}
                 </div>
               </InfiniteScroll>
             )

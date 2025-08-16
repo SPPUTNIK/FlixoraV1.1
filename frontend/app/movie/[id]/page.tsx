@@ -6,6 +6,7 @@ import { MovieHeader } from '@/components/MovieHeader';
 import { MoviePlayer } from '@/components/MoviePlayer';
 import { MovieInfo } from '@/components/MovieInfo';
 import { useTranslation } from '@/hooks/useTranslation';
+import { UnifiedAd } from '@/components/ads';
 
 export default function MovieDetailPage() {
   const params = useParams();
@@ -96,6 +97,18 @@ export default function MovieDetailPage() {
       <div className="relative">
         <MovieHeader movie={movie.movieData} />
         
+        {/* Banner Ad After Movie Header */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-center">
+            <UnifiedAd 
+              type="banner" 
+              width={728} 
+              height={90}
+              className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            />
+          </div>
+        </div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 lg:gap-12">
             {/* Main Content - Video Player */}
@@ -123,6 +136,16 @@ export default function MovieDetailPage() {
             
             {/* Sidebar - Movie Details and Info */}
             <div className="xl:col-span-1 space-y-8">
+              {/* Sidebar Banner Ad */}
+              <div className="flex justify-center">
+                <UnifiedAd 
+                  type="banner" 
+                  width={300} 
+                  height={250}
+                  className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                />
+              </div>
+              
               {/* IMDb Link Card */}
               <div className="bg-white/10 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-6 sm:p-8 transition-all duration-300 hover:shadow-purple-500/10 hover:border-white/30">
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center">
