@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   title: 'FLIXORA - Premium Movie Streaming',
   description: 'Stream thousands of movies in premium quality on FLIXORA - Your ultimate movie experience',
   other: {
-    '6a97888e-site-verification': 'ba9f139b08e5f8aac7c2847b5df4a6'
+    '6a97888e-site-verification': 'ba9f139b08e5f8aac7c2847b5df4a6',
+    'Accept-CH': 'Sec-CH-UA, Sec-CH-UA-Mobile, Sec-CH-UA-Platform, Sec-CH-Viewport-Width, Sec-CH-Viewport-Height'
   }
 }
 
